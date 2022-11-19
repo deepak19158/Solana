@@ -12,7 +12,6 @@ import {
   WalletModalProvider,
   WalletMultiButton,
 } from "@solana/wallet-adapter-react-ui";
-import { Button } from "@solana/wallet-adapter-react-ui/lib/types/Button";
 
 import {
   GlowWalletAdapter,
@@ -25,19 +24,15 @@ import {
   TorusWalletAdapter,
 } from "@solana/wallet-adapter-wallets";
 import bs58 from "bs58";
-import fs from "fs";
 
 import {
   clusterApiUrl,
-  Transaction,
-  SystemProgram,
   Keypair,
   LAMPORTS_PER_SOL,
-  PublicKey,
 } from "@solana/web3.js";
-import React, { FC, ReactNode, useMemo, useCallback, useState } from "react";
+import { FC, ReactNode, useMemo } from "react";
 
-import { actions, utils, programs, NodeWallet } from "@metaplex/js";
+import { actions, NodeWallet } from "@metaplex/js";
 
 require("./App.css");
 require("@solana/wallet-adapter-react-ui/styles.css");
@@ -89,7 +84,7 @@ const Context: FC<{ children: ReactNode }> = ({ children }) => {
 
 const Content: FC = () => {
   const { connection } = useConnection();
-  const { publicKey, sendTransaction } = useWallet();
+  const { publicKey } = useWallet();
 
   async function uploadToArweave() {}
 
@@ -118,32 +113,24 @@ const Content: FC = () => {
   //https://www.arweave.net/E549DU2gkzyb3ho-9c5Z5tnW7v7nlPHdkRZlOlTh6ds?ext=json
 
   return (
-    <div className="App">
-      <div className="navbar">
-        <div className="navbar-inner ">
-          <a id="title" className="brand" href="#">
-            Brand
-          </a>
-          <ul className="nav"></ul>
-          <ul className="nav pull-right">
-            <li>
-              <a href="#">White Paper</a>
-            </li>
-            <li className="divider-vertical"></li>
-            <li>
-              <WalletMultiButton />
-            </li>
-          </ul>
+    <div className="App bg-yellow-50">
+      <div className="w-72 h-72 bg-yellow-400 rounded-full absolute -left-24 -top-16">
+
+      </div>
+      <div className="min-w-full h-screen">
+        <div className="flex flex-col w-full h-full justify-center items-center ">
+          <WalletMultiButton />
+          <div className="text-white font-semibold mt-5">
+            <button className="bg-green-600 w-44 py-5 hover:opacity-80 tranistion duration-300" onClick={onClick}>
+              Mint NFT{" "}
+            </button>
+            <button className="bg-blue-600 w-44 py-5 hover:opacity-80 tranistion duration-300" onClick={uploadToArweave}>
+              Upload to Arweave
+            </button>
+          </div>
         </div>
       </div>
 
-      <br></br>
-      <button className="btn" onClick={onClick}>
-        Mint NFT{" "}
-      </button>
-      <button className="btn" onClick={uploadToArweave}>
-        Upload to Arweave
-      </button>
     </div>
   );
 };
